@@ -1,6 +1,6 @@
 # Microbiota Thesis Pipeline
 
-Bioinformatics workflow and analysis scripts developed for my undergraduate thesis submitted to the Universidad Autónoma de Querétaro (UAQ), Mexico.
+Bioinformatics workflow and analysis scripts developed for my undergraduate thesis in Microbiology at the Universidad Autónoma de Querétaro (UAQ), Mexico.
 
 ## Academic Supervision
 
@@ -10,3 +10,4 @@ Research activities and computational analyses were carried out using resources 
 
 ## Author 
 Mayela Fosado-Mendoza
+maye.fosado@gmail.com
