@@ -4,7 +4,7 @@ Bioinformatics workflow and analysis scripts developed for my undergraduate thes
 
 ## Academic Supervision
 
-External thesis supervisor: Dr. Alfredo Varela-Echavarría.
+External thesis supervisor: Dr. Alfredo Varela-Echavarría (INB, UNAM)
 
 Research activities and computational analyses were carried out using resources at the Laboratorio Nacional de Visualización Científica Avanzada (LAVIS), UNAM Campus Juriquilla, Querétaro, Mexico.
 
