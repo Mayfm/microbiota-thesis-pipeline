@@ -1,0 +1,72 @@
+---
+title: "Functional Analysis"
+---
+
+To complement taxonomic characterization, a curated functional inference workflow was conducted to explore the potential biological roles associated with dominant microbial genera detected in *Deroceras laeve*.
+
+## Selection of Representative Taxa
+
+The ten most abundant microbial genera identified from relative abundance profiles were used as the basis for downstream functional analyses.
+
+For each genus, two representative species were selected according to abundance patterns and reference genome availability.
+
+## Retrieval of Reference Proteomes
+
+Protein datasets were obtained from the NCBI RefSeq database using the `datasets` command-line tool.
+
+``` bash
+module load ncbi-datasets/14.9.0
+
+download_genome() {
+  local accession=$1
+  local dir_name=$2
+
+  datasets download genome accession $accession --include protein
+  mv ncbi_dataset.zip ${dir_name}.zip
+  unzip ${dir_name}.zip
+  mv ncbi_dataset/ $dir_name
+}
+
+download_genome GCF_016861625.1 Acidianus
+download_genome GCF_009617995.1 Halomicrobium
+```
+
+Equivalent downloads were performed for all selected representative taxa.
+
+## Functional Annotation with KEGG Tools
+
+Protein files were functionally annotated using:
+
+-   GhostKOALA
+
+-   KAAS (KEGG Automatic Annotation Server)
+
+These tools assign KEGG Orthology identifiers (K numbers) through homology-based comparisons against curated KEGG references.
+
+## Pathway Reconstruction
+
+Annotated KO terms were integrated in KEGG Mapper (Reconstruct) to visualize metabolic and cellular pathways.
+
+Major categories included:
+
+-   Metabolism
+
+-   Translation
+
+-   DNA replication and repair
+
+-   Protein folding
+
+-   Signal transduction
+
+-   Environmental information processing
+
+## Functional Matrix Construction in R
+
+KEGG Mapper output tables were imported into R and merged into a unified matrix containing functional subcategories across representative archaeal genera.
+
+Rows represented functional subcategories, whereas columns represented microbial genera.
+
+Heatmap Visualization
+
+Comparative heatmaps were generated using the pheatmap package after row-wise scaling to identify functional enrichment patterns among archaeal taxa.

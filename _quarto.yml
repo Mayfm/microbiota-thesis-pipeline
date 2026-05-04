@@ -1,0 +1,37 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Microbiota Thesis Pipeline"
+  author: "Mayela Fosado-Mendoza"
+  date: "2026"
+  page-navigation: true
+
+  chapters:
+    - index.qmd
+    - preprocessing.qmd
+    - taxonomic_profiling.qmd
+    - taxonomic_analysis.qmd
+    - functional_analysis.qmd
+
+  repo-url: https://github.com/Mayfm/Microbiota-thesis-pipeline
+  favicon: "favicon.png"
+
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-depth: 3
+    code-fold: show
+    code-copy: true
+    smooth-scroll: true
+    link-external-newwindow: true
+
+    theme:
+      light: minty
+      dark: darkly
+
+    css: styles.css
+
+editor: visual

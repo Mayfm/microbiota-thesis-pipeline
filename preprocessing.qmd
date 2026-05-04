@@ -1,0 +1,77 @@
+---
+title: "Sequence preprocessing and quality control"
+---
+
+## Read Preprocessing
+
+Raw paired-end sequencing reads generated from *Deroceras laeve* samples were subjected to a multi-step quality control workflow prior to downstream taxonomic analyses.
+
+## Raw Sequencing Data
+
+Illumina paired-end FASTQ files were used as the starting input for the analysis. Each read entry contained sequence identifiers, nucleotide sequences, and ASCII-encoded quality scores.
+
+Example input files:
+
+-   `dlaeve1_R1.fastq`
+-   `dlaeve1_R2.fastq`
+
+## Initial Quality Assessment
+
+Raw reads were first evaluated using FastQC to inspect sequence quality, GC content, adapter contamination, and other quality metrics.
+
+``` bash
+module load fastqc/0.11.3
+
+fastqc ../1seq_data/dlaeve1_R1.fastq -o . -t 4
+fastqc ../1seq_data/dlaeve1_R2.fastq -o . -t 4
+```
+
+The resulting HTML reports were visually inspected before applying quality filtering.
+
+## Adapter Removal and Quality Trimming
+
+Reads were processed with Trimmomatic to remove adapter sequences and low-quality bases. Paired and unpaired output files were generated for each sample.
+
+``` bash
+module load trimmomatic/0.39
+
+trimmomatic PE -threads 4 \
+  ../1seq_data/dlaeve1_R1.fastq \
+  ../1seq_data/dlaeve1_R2.fastq \
+  trimm_dlaeve1_R1.paired.fq.gz \
+  trimm_dlaeve1_R1.unpaired.fq.gz \
+  trimm_dlaeve1_R2.paired.fq.gz \
+  trimm_dlaeve1_R2.unpaired.fq.gz \
+  ILLUMINACLIP:Next_Illumina.fa:2:28:10 \
+  LEADING:28 TRAILING:28 \
+  SLIDINGWINDOW:4:28 \
+  MINLEN:50
+```
+
+## Post-trimming Quality Review
+
+Filtered paired reads were evaluated again using FastQC to confirm improvement in sequence quality and identify any remaining issues.
+
+## Additional 5' Trimming
+
+Based on the quality inspection of trimmed reads, the first 9 nucleotides of each sequence were removed using Cutadapt.
+
+``` bash
+module load anaconda3/2025.06
+source activate cutadapt-5.1
+
+cutadapt -u 9 \
+  -o Dlaeve_R1_cut.fastq \
+  ../3trimmomatic/trimm_dlaeve_R1.paired.fq.gz
+
+cutadapt -u 9 \
+  -o Dlaeve_R2_cut.fastq \
+  ../3trimmomatic/trimm_dlaeve_R2.paired.fq.gz
+  
+```
+
+## Final Output
+
+The resulting *_cut.fastq files were used as high-quality input reads for subsequent taxonomic profiling and downstream microbiota analyses.
+  
+  

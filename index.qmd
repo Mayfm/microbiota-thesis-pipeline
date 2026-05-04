@@ -1,0 +1,45 @@
+---
+title: "Microbiota Thesis Pipeline"
+subtitle: "Bioinformatics workflow and reproducible analyses"
+author: "Mayela Fosado-Mendoza"
+---
+
+![](figures/slug.jpg){width="450"}
+
+<small><em>Photograph by Dr. Alfredo Varela-Echavarría</em></small>
+
+# Welcome {.unnumbered}
+
+This repository contains the bioinformatics pipeline developed during my undergraduate thesis focused on the body wall microbiota of *Deroceras laeve*.
+
+It organizes computational workflows, analytical scripts, and selected outputs generated throughout the project.
+
+# Pipeline Scope {.unnumbered}
+
+-   Sequence preprocessing and quality control\
+-   Taxonomic profiling of microbial communities\
+-   Functional annotation and KEGG-based exploration\
+-   Statistical analyses in R\
+-   Reproducible visualizations and figures
+
+# Project Purpose {.unnumbered}
+
+This resource was created to document the thesis workflow.
+
+# Academic Context {.unnumbered}
+
+Undergraduate thesis in Microbiology\
+Universidad Autónoma de Querétaro (UAQ), Mexico
+
+External supervisor: Dr. Alfredo Varela-Echavarría (INB, UNAM)
+
+Computational resources from Laboratorio Nacional de Visualización Científica Avanzada (LAVIS), UNAM Juriquilla.
+
+# Explore {.unnumbered}
+
+Use the navigation panel to browse workflow steps, analyses, figures, and project notes.
+
+# Contact {.unnumbered}
+
+**Mayela Fosado-Mendoza**\
+GitHub: [Mayfm](https://github.com/Mayfm) Email: `maye.fosado@gmail.com`
