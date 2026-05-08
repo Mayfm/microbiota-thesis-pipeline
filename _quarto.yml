@@ -14,6 +14,7 @@ book:
     - taxonomic_profiling.qmd
     - taxonomic_analysis.qmd
     - functional_analysis.qmd
+    - comparative_analysis.qmd
 
   repo-url: https://github.com/Mayfm/Microbiota-thesis-pipeline
   favicon: "favicon.png"
