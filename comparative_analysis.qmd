@@ -190,6 +190,7 @@ genus_df <- genus_df %>%
     metadata[, c("SampleID","Species")],
     by = c("Sample"="SampleID")
   )
+
 ```
 
 Custom colors:
@@ -202,6 +203,7 @@ colors <- c("#9BCF53", "#FF70AB", "#FEC7B4", "#2EC4B6",
 
 colors_by_genus <- setNames(colors, top_genus$Genus)
 colors_by_genus["Others"] <- "#A7BED3"
+
 ```
 
 Plot:
@@ -213,6 +215,7 @@ ggplot(genus_df, aes(x = Species, y = Abundance, fill = Genus)) +
   scale_fill_manual(values = colors_by_genus) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, face = "italic"))
+
 ```
 
 ![](figures/archaea_genus_mollusks.png){ }
@@ -267,6 +270,7 @@ kruskal.test(Shannon ~ Species, data = alpha_df)
 #Post hoc test
 library(FSA)
 dunnTest(Shannon ~ Species, data = alpha_df, method = "bh")
+
 ```
 
 ## Beta Diversity (NMDS)
@@ -289,6 +293,7 @@ nmds_df$SampleID <- rownames(nmds_df)
 
 nmds_df <- nmds_df %>%
   left_join(metadata, by = "SampleID")
+
 ```
 
 Plot:
@@ -299,6 +304,7 @@ ggplot(nmds_df, aes(MDS1, MDS2, color = Species)) +
   geom_point(size = 3) +
   stat_ellipse() +
   theme_minimal()
+
 ```
 
 ![](figures/beta_diversity.png){ }
@@ -314,6 +320,7 @@ This method evaluates whether centroids of groups differ in multivariate space.
 adonis2(dist_bc ~ Species, data = metadata)
 adonis2(dist_bc ~ Type, data = metadata)
 adonis2(dist_bc ~ Ecosystem, data = metadata)
+
 ```
 
 ![](figures/permanova_analysis.png){ }
@@ -331,3 +338,30 @@ permutest(disp_especie)
 ```
 
 ![](figures/dispersion_analysis.png){ }
+
+## Adaptation to Other Taxa
+
+The same analytical framework can be applied to other microbial groups by modifying the selected taxonomic subset according to the rank of interest and the structure of the dataset.
+
+For example, some groups can be selected directly at the Kingdom level:
+
+```{r, eval=FALSE}
+
+subset_taxa(dlaeve_physeq, Kingdom == "Bacteria")
+mollusk_physeq <- subset_taxa(mollusk_physeq, Genus != "")
+
+subset_taxa(dlaeve_physeq, Kingdom == "Viruses")
+mollusk_physeq <- subset_taxa(mollusk_physeq, Genus != "")
+
+```
+
+In other cases, more specific taxonomic ranks may be used. For fungal analyses, representative phyla were selected as follows:
+
+```{r, eval=FALSE}
+
+subset_taxa( dlaeve_physeq, 
+             Phylum %in% c("Ascomycota", "Basidiomycota", "Microsporidia" )
+  )
+mollusk_physeq <- subset_taxa(mollusk_physeq, Genus != "")
+
+```

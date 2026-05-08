@@ -203,6 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#dispersion-analysis" id="toc-dispersion-analysis" class="nav-link" data-scroll-target="#dispersion-analysis"><span class="header-section-number">6.6.1</span> Dispersion Analysis</a></li>
   </ul></li>
+  <li><a href="#adaptation-to-other-taxa" id="toc-adaptation-to-other-taxa" class="nav-link" data-scroll-target="#adaptation-to-other-taxa"><span class="header-section-number">6.7</span> Adaptation to Other Taxa</a></li>
   </ul>
 </nav>
     </div>
@@ -550,9 +551,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p><img src="figures/dispersion_analysis.png" class="img-fluid"></p>
-
-
 </section>
+</section>
+<section id="adaptation-to-other-taxa" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="adaptation-to-other-taxa"><span class="header-section-number">6.7</span> Adaptation to Other Taxa</h2>
+<p>The same analytical framework can be applied to other microbial groups by modifying the selected taxonomic subset according to the rank of interest and the structure of the dataset.</p>
+<p>For example, some groups can be selected directly at the Kingdom level:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset_taxa</span>(dlaeve_physeq, Kingdom <span class="sc">==</span> <span class="st">"Bacteria"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mollusk_physeq <span class="ot">&lt;-</span> <span class="fu">subset_taxa</span>(mollusk_physeq, Genus <span class="sc">!=</span> <span class="st">""</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">subset_taxa</span>(dlaeve_physeq, Kingdom <span class="sc">==</span> <span class="st">"Viruses"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>mollusk_physeq <span class="ot">&lt;-</span> <span class="fu">subset_taxa</span>(mollusk_physeq, Genus <span class="sc">!=</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>In other cases, more specific taxonomic ranks may be used. For fungal analyses, representative phyla were selected as follows:</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset_taxa</span>( dlaeve_physeq, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>             Phylum <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ascomycota"</span>, <span class="st">"Basidiomycota"</span>, <span class="st">"Microsporidia"</span> )</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>mollusk_physeq <span class="ot">&lt;-</span> <span class="fu">subset_taxa</span>(mollusk_physeq, Genus <span class="sc">!=</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

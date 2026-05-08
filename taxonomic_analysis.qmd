@@ -37,10 +37,12 @@ Taxonomic Selection
 Reads assigned to Archaea were extracted for focused downstream analyses.
 
 ```{r, eval=FALSE}
+
 archaea <- subset_taxa(
   dlaeve_physeq,
   Kingdom == "Archaea"
 )
+
 ```
 
 ### Removal of Unidentified Genera 
@@ -48,24 +50,29 @@ archaea <- subset_taxa(
 Only classified genera were retained for abundance summaries and visualization.
 
 ```{r, eval=FALSE}
+
 archaea <- subset_taxa(
   archaea,
   Genus != ""
 )
+
 ```
 
 ### Relative Abundance Transformation
 
 ```{r, eval=FALSE}
+
 percentages <- transform_sample_counts(
   archaea,
   function(x) x * 100 / sum(x)
 )
+
 ```
 
 ## Phylum-Level Summarization 
 
 ```{r, eval=FALSE}
+
 percentages_glom <- tax_glom(
   percentages,
   taxrank = "Phylum"
@@ -74,6 +81,7 @@ percentages_glom <- tax_glom(
 percentages_df <- psmelt(
   percentages_glom
 )
+
 ```
 
 ### Identification of Dominant Taxa 
@@ -81,6 +89,7 @@ percentages_df <- psmelt(
 The ten most abundant phyla were selected, while less abundant taxa were grouped as Others.
 
 ```{r, eval=FALSE}
+
 abundance_phylum <- percentages_df %>%
   mutate(Phylum = as.character(Phylum)) %>%
   group_by(Phylum) %>%
@@ -96,6 +105,7 @@ Relative abundance plots were generated with ggplot2 using custom color palettes
 Custom colors:
 
 ```{r. eval=FALSE}
+
 colors <- c(
   "#9BCF53", "#FFD93D", "#FF70AB",
   "#A3FFD6", "#FEC7B4", "#83C0C1",
@@ -110,7 +120,7 @@ colors_by_phylum <- setNames(
 
 colors_by_phylum["Others"] <- "#A7BED3"
 
-````
+```
 
 Plot:
 
