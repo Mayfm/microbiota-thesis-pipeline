@@ -18,7 +18,7 @@
     "href": "preprocessing.html#raw-sequencing-data",
     "title": "2  Sequence preprocessing and quality control",
     "section": "2.2 Raw Sequencing Data",
-    "text": "2.2 Raw Sequencing Data\nIllumina paired-end FASTQ files were used as the starting input for the analysis. Each read entry contained sequence identifiers, nucleotide sequences, and ASCII-encoded quality scores.\nExample input files:\n\ndlaeve1_R1.fastq\ndlaeve1_R2.fastq"
+    "text": "2.2 Raw Sequencing Data\nIllumina paired-end FASTQ files were used as the starting input for the analysis. Each read entry contained sequence identifiers, nucleotide sequences, and ASCII-encoded quality scores.\nExample input files:\n\ndlaeve1_R1.fastq\ndlaeve1_R2.fastq\n\nThe raw sequencing data generated for this study are publicly available in the NCBI Sequence Read Archive (SRA) under BioProject PRJNA1035784 (samples BC59–BC63)."
   },
   {
     "objectID": "preprocessing.html#initial-quality-assessment",

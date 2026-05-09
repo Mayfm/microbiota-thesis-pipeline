@@ -15,6 +15,8 @@ Example input files:
 -   `dlaeve1_R1.fastq`
 -   `dlaeve1_R2.fastq`
 
+The raw sequencing data generated for this study are publicly available in the NCBI Sequence Read Archive (SRA) under BioProject PRJNA1035784 (samples BC59--BC63).
+
 ## Initial Quality Assessment
 
 Raw reads were first evaluated using FastQC to inspect sequence quality, GC content, adapter contamination, and other quality metrics.
