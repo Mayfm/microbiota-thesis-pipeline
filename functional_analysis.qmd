@@ -69,14 +69,13 @@ For this analysis, only the `Sequence_counts` files were used, as they provide a
 
 Each row in these files represents:
 
--   A major KEGG functional category (e.g., *Metabolism*)\
--   A specific subcategory (e.g., *Carbohydrate metabolism*)\
+-   A major KEGG functional category (e.g., Metabolism)\
+-   A specific subcategory (e.g., Carbohydrate metabolism)\
 -   The number of protein sequences assigned to that function
 
 This structure allows the comparison of functional profiles across different microbial genera.
 
 Other output files (e.g., adjacency lists) were not included in this workflow, as the focus of this analysis was on functional abundance rather than network relationships.
-
 
 ### Example of KEGG Output Structure
 
@@ -90,7 +89,6 @@ A simplified example of the structure of a `Sequence_counts` file is shown below
 | Cellular Processes             | Cell motility           | 45    |
 
 These values were used to construct the functional abundance matrix used in the heatmap and barplot visualizations.
-
 
 ## Import and Organize Functional Data
 
@@ -139,13 +137,13 @@ for (file in archaeal_files) {
 }
 ```
 
-Build the Functional Matrix
+### Build the Functional Matrix
 
 All individual tables are merged into a single dataset and reshaped into a wide-format matrix, where:
 
-- rows represent functional subcategories
-- columns represent genera
-- values represent sequence counts
+-   rows represent functional subcategories
+-   columns represent genera
+-   values represent sequence counts
 
 ```{r, eval=FALSE}
 combined_data <- bind_rows(genus_tables)
@@ -231,7 +229,7 @@ pheatmap(
 )
 ```
 
-![](figures/archaea_heatmap.png){width=100%}
+![](figures/archaea_heatmap.png){width="100%"}
 
 ## Dominant Functional Categories
 
@@ -281,8 +279,7 @@ barplot_archaea <- ggplot(
 barplot_archaea
 ```
 
-![](figures/archaea_barplot.png){ }
-
+![](figures/archaea_barplot.png)
 
 ## Functional Overview
 
@@ -295,10 +292,19 @@ The workflow described above can be directly applied to other microbial domains 
 For example:
 
 #### Bacteria
-input_dir <- "data/functional_analysis/protein_bacteria"
+
+```{r, eval=FALSE}
+input_dir \<- "data/functional_analysis/protein_bacteria"
+```
 
 #### Fungi
-input_dir <- "data/functional_analysis/protein_fungi"
+
+```{r, eval=FALSE}
+input_dir \<- "data/functional_analysis/protein_fungi"
+```
 
 #### Viruses
-input_dir <- "data/functional_analysis/protein_viruses"
+
+```{r, eval=FALSE}
+input_dir \<- "data/functional_analysis/protein_viruses"
+```

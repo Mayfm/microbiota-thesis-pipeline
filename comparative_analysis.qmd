@@ -1,7 +1,7 @@
 ---
-title: "Comparative Analysis Across Mollusks"
+  title: "Comparative Analysis Across Mollusks"
 ---
-
+  
 To contextualize the microbiota of *Deroceras laeve*, a comparative analysis was conducted using publicly available metagenomic datasets from other mollusk species.
 
 This approach allowed the identification of shared and distinct microbial patterns across taxa, as well as the exploration of ecological and host-associated influences on microbiota composition.
@@ -130,7 +130,7 @@ phylum_df <- phylum_df %>%
 ```
 
 Custom colors:
-
+  
 ```{r, eval=FALSE}
 
 colors <- c("#9BCF53", "#FFD93D", "#FF70AB", "#A3FFD6",
@@ -148,11 +148,12 @@ colors_by_phylum["Others"] <- "#A7BED3"
 ```
 
 Plot:
-
+  
 ```{r, eval=FALSE}
 
 main_plot <- ggplot(phylum_df, aes(x = Species, y = Abundance, fill = Phylum)) +
   geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
   scale_fill_manual(values = colors_by_phylum) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, face = "italic"))
@@ -160,12 +161,15 @@ main_plot <- ggplot(phylum_df, aes(x = Species, y = Abundance, fill = Phylum)) +
 ecosystem_bar <- ggplot(phylum_df, aes(x = Species, fill = Ecosystem)) +
   geom_tile(aes(y = 1)) +
   scale_fill_manual(values = ecosystem_colors) +
-  theme_void()
+  theme_void()  +
+  theme(
+    legend.position = "bottom"
+  )
 
 main_plot / ecosystem_bar + plot_layout(heights = c(1, 0.02))
 ```
 
-![](figures/archaea_phylum_mollusks.png){ }
+![](figures/archaea_phylum_mollusks.png)
 
 ### Genus-Level Composition
 
@@ -187,14 +191,14 @@ genus_df <- genus_df %>%
 
 genus_df <- genus_df %>%
   left_join(
-    metadata[, c("SampleID","Species")],
+    metadata[, c("SampleID","Species","Ecosystem")],
     by = c("Sample"="SampleID")
   )
 
 ```
 
 Custom colors:
-
+  
 ```{r, eval=FALSE}
 
 colors <- c("#9BCF53", "#FF70AB", "#FEC7B4", "#2EC4B6",
@@ -207,26 +211,39 @@ colors_by_genus["Others"] <- "#A7BED3"
 ```
 
 Plot:
-
+  
 ```{r, eval=FALSE}
 
-ggplot(genus_df, aes(x = Species, y = Abundance, fill = Genus)) +
+main_plot <- ggplot(genus_df, aes(x = Species, y = Abundance, fill = Genus)) +
   geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
   scale_fill_manual(values = colors_by_genus) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, face = "italic"))
+  theme(axis.text.x = element_text(angle = 90, face = "italic"),
+        legend.text = element_text(face = "italic")
+  )
+
+ecosystem_bar <- ggplot(phylum_df, aes(x = Species, fill = Ecosystem)) +
+  geom_tile(aes(y = 1)) +
+  scale_fill_manual(values = ecosystem_colors) +
+  theme_void()  +
+  theme(
+    legend.position = "bottom"
+  )
+
+main_plot / ecosystem_bar + plot_layout(heights = c(1, 0.02))
 
 ```
 
-![](figures/archaea_genus_mollusks.png){ }
+![](figures/archaea_genus_mollusks.png)
 
 ## Alpha Diversity
 
 Alpha diversity was assessed using three complementary indices:
-
-- Chao1 (richness estimator)
-- Shannon (richness and evenness)
-- Simpson (dominance/evenness)
+  
+  -   Chao1 (richness estimator)
+-   Shannon (richness and evenness)
+-   Simpson (dominance/evenness)
 
 All indices were visualized simultaneously to enable direct comparison across mollusk species.
 
@@ -248,13 +265,13 @@ plot_richness(
         legend.position = "none")
 ```
 
-![](figures/alpha_diversity.png){ }
+![](figures/alpha_diversity.png)
 
 ### Statistical Analysis
 
-Differences in alpha diversity across species were evaluated using the Kruskal–Wallis test, a non-parametric alternative to ANOVA, suitable for ecological data that do not meet normality assumptions.
+Differences in alpha diversity across species were evaluated using the Kruskal--Wallis test, a non-parametric alternative to ANOVA, suitable for ecological data that do not meet normality assumptions.
 
-When significant differences were detected, pairwise comparisons were performed using Dunn’s test with Benjamini–Hochberg correction to control for multiple testing.
+When significant differences were detected, pairwise comparisons were performed using Dunn's test with Benjamini--Hochberg correction to control for multiple testing.
 
 ```{r, eval=FALSE}
 
@@ -275,7 +292,7 @@ dunnTest(Shannon ~ Species, data = alpha_df, method = "bh")
 
 ## Beta Diversity (NMDS)
 
-Community composition differences were assessed using Bray–Curtis dissimilarity, a metric commonly used in ecological studies.
+Community composition differences were assessed using Bray--Curtis dissimilarity, a metric commonly used in ecological studies.
 
 Non-metric multidimensional scaling (NMDS) was applied to visualize similarities between samples in reduced dimensional space.
 
@@ -307,7 +324,7 @@ ggplot(nmds_df, aes(MDS1, MDS2, color = Species)) +
 
 ```
 
-![](figures/beta_diversity.png){ }
+![](figures/beta_diversity.png)
 
 ## PERMANOVA
 
@@ -323,7 +340,7 @@ adonis2(dist_bc ~ Ecosystem, data = metadata)
 
 ```
 
-![](figures/permanova_analysis.png){ }
+![](figures/permanova_analysis.png)
 
 ### Dispersion Analysis
 
@@ -337,7 +354,7 @@ disp_especie <- betadisper(dist_bc, metadata$Species)
 permutest(disp_especie)
 ```
 
-![](figures/dispersion_analysis.png){ }
+![](figures/dispersion_analysis.png)
 
 ## Adaptation to Other Taxa
 

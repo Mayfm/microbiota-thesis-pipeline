@@ -68,6 +68,8 @@ Kraken2 reports were explored in Pavian to inspect taxonomic assignments and gen
 pavian::runApp(port = 5000)
 ```
 
+![](figures/pavian.png){width="600"}
+
 This step facilitated rapid inspection of kingdom-level distributions across samples.
 
 ## BIOM Table Generation

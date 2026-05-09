@@ -72,6 +72,4 @@ cutadapt -u 9 \
 
 ## Final Output
 
-The resulting *_cut.fastq files were used as high-quality input reads for subsequent taxonomic profiling and downstream microbiota analyses.
-  
-  
+The resulting `*_cut.fastq` files were used as high-quality input reads for subsequent taxonomic profiling and downstream microbiota analyses.

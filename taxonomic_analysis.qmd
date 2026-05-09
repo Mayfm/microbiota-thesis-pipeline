@@ -104,7 +104,7 @@ Relative abundance plots were generated with ggplot2 using custom color palettes
 
 Custom colors:
 
-```{r. eval=FALSE}
+```{r, eval=FALSE}
 
 colors <- c(
   "#9BCF53", "#FFD93D", "#FF70AB",
@@ -149,7 +149,6 @@ ggplot(
     labels = scales::percent_format()
   ) +
   labs(
-    title = "Archaea - Phylum Composition",
     x = "Samples",
     y = "Relative abundance (%)"
   )
@@ -243,7 +242,6 @@ ggplot(
     labels = scales::percent_format()
   ) +
   labs(
-    title = "Archaea - Genus Composition",
     x = "Samples",
     y = "Relative abundance (%)"
   )

@@ -197,7 +197,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#import-and-organize-functional-data" id="toc-import-and-organize-functional-data" class="nav-link" data-scroll-target="#import-and-organize-functional-data"><span class="header-section-number">5.5</span> Import and Organize Functional Data</a>
   <ul>
-  <li><a href="#functional-annotations-and-color-design" id="toc-functional-annotations-and-color-design" class="nav-link" data-scroll-target="#functional-annotations-and-color-design"><span class="header-section-number">5.5.1</span> Functional Annotations and Color Design</a></li>
+  <li><a href="#build-the-functional-matrix" id="toc-build-the-functional-matrix" class="nav-link" data-scroll-target="#build-the-functional-matrix"><span class="header-section-number">5.5.1</span> Build the Functional Matrix</a></li>
+  <li><a href="#functional-annotations-and-color-design" id="toc-functional-annotations-and-color-design" class="nav-link" data-scroll-target="#functional-annotations-and-color-design"><span class="header-section-number">5.5.2</span> Functional Annotations and Color Design</a></li>
   </ul></li>
   <li><a href="#heatmap-visualization" id="toc-heatmap-visualization" class="nav-link" data-scroll-target="#heatmap-visualization"><span class="header-section-number">5.6</span> Heatmap Visualization</a></li>
   <li><a href="#dominant-functional-categories" id="toc-dominant-functional-categories" class="nav-link" data-scroll-target="#dominant-functional-categories"><span class="header-section-number">5.7</span> Dominant Functional Categories</a>
@@ -286,9 +287,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For this analysis, only the <code>Sequence_counts</code> files were used, as they provide a quantitative summary of functional assignments.</p>
 <p>Each row in these files represents:</p>
 <ul>
-<li>A major KEGG functional category (e.g., <em>Metabolism</em>)<br>
+<li>A major KEGG functional category (e.g., Metabolism)<br>
 </li>
-<li>A specific subcategory (e.g., <em>Carbohydrate metabolism</em>)<br>
+<li>A specific subcategory (e.g., Carbohydrate metabolism)<br>
 </li>
 <li>The number of protein sequences assigned to that function</li>
 </ul>
@@ -381,7 +382,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Build the Functional Matrix</p>
+<section id="build-the-functional-matrix" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="build-the-functional-matrix"><span class="header-section-number">5.5.1</span> Build the Functional Matrix</h3>
 <p>All individual tables are merged into a single dataset and reshaped into a wide-format matrix, where:</p>
 <ul>
 <li>rows represent functional subcategories</li>
@@ -413,8 +415,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="functional-annotations-and-color-design" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="functional-annotations-and-color-design"><span class="header-section-number">5.5.1</span> Functional Annotations and Color Design</h3>
+</section>
+<section id="functional-annotations-and-color-design" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="functional-annotations-and-color-design"><span class="header-section-number">5.5.2</span> Functional Annotations and Color Design</h3>
 <p>To improve interpretation, each subcategory is linked to a broader KEGG class (e.g., metabolism or cellular processes). These categories are also used to define a consistent color scheme.</p>
 <div class="cell">
 <details open="">
@@ -543,15 +546,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For example:</p>
 <section id="bacteria" class="level4">
 <h4 class="anchored" data-anchor-id="bacteria">Bacteria</h4>
-<p>input_dir &lt;- “data/functional_analysis/protein_bacteria”</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>input_dir \<span class="ot">&lt;-</span> <span class="st">"data/functional_analysis/protein_bacteria"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 <section id="fungi" class="level4">
 <h4 class="anchored" data-anchor-id="fungi">Fungi</h4>
-<p>input_dir &lt;- “data/functional_analysis/protein_fungi”</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>input_dir \<span class="ot">&lt;-</span> <span class="st">"data/functional_analysis/protein_fungi"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 <section id="viruses" class="level4">
 <h4 class="anchored" data-anchor-id="viruses">Viruses</h4>
-<p>input_dir &lt;- “data/functional_analysis/protein_viruses”</p>
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>input_dir \<span class="ot">&lt;-</span> <span class="st">"data/functional_analysis/protein_viruses"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
 </section>
