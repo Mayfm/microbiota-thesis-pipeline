@@ -66,7 +66,7 @@ mollusk_info <- data.frame(
 metadata <- left_join(
   metadata,
   mollusk_info,
-  by = c("Gastropod_specie" = "Species_full")
+  by = c("Mollusk_species" = "Species_full")
 )
 
 species_labels <- c(
@@ -85,7 +85,7 @@ species_labels <- c(
   "Stewartia floridana"="S. floridana"
 )
 
-metadata$Species <- species_labels[metadata$Gastropod_specie]
+metadata$Species <- species_labels[metadata$Mollusk_species]
 ```
 
 ## Taxonomic analysis
@@ -241,25 +241,33 @@ main_plot / ecosystem_bar + plot_layout(heights = c(1, 0.02))
 
 Alpha diversity was assessed using three complementary indices:
   
-  -   Chao1 (richness estimator)
+-   Chao1 (richness estimator)
 -   Shannon (richness and evenness)
 -   Simpson (dominance/evenness)
 
 All indices were visualized simultaneously to enable direct comparison across mollusk species.
 
+Custom colors:
+
 ```{r, eval=FALSE}
+colors <- c(
+  "#9BCF53", "#FF9843", "#132440", "#FF70AB", "#F273E6", "#7B66FF", 
+  "#F6C453", "#67B7D1", "#FF9B9B", "#215E61", "#D173E6", "#416D19",
+  "#80BCBD", "#FF6E94", "#640D5F")
+```
 
-sample_data(mollusk_physeq)$Species <- metadata$Species
+Plot:
 
+```{r, eval=FALSE}
 plot_richness(
   physeq = mollusk_physeq,
-  x = "Species",
-  color = "Species",
+  x = "Mollusk_species",
+  color = "Mollusk_species",
   measures = c("Chao1", "Shannon", "Simpson")
 ) +
   geom_boxplot(alpha = 0.6, outlier.shape = NA) +
   geom_point(size = 2.5, position = position_jitter(width = 0.2)) +
-  scale_color_brewer(palette = "Dark2") +
+  scale_color_manual(values = colors) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, face = "italic"),
         legend.position = "none")
@@ -280,13 +288,13 @@ alpha_df <- estimate_richness(
   measures = c("Chao1", "Shannon", "Simpson")
 )
 
-alpha_df$Species <- sample_data(mollusk_physeq)$Species
+alpha_df$Mollusk_species <- sample_data(mollusk_physeq)$Mollusk_species
 
-kruskal.test(Shannon ~ Species, data = alpha_df)
+kruskal.test(Shannon ~ Mollusk_species, data = alpha_df)
 
 #Post hoc test
 library(FSA)
-dunnTest(Shannon ~ Species, data = alpha_df, method = "bh")
+dunnTest(Shannon ~ Mollusk_species, data = alpha_df, method = "bh")
 
 ```
 
@@ -317,10 +325,109 @@ Plot:
 
 ```{r, eval=FALSE}
 
-ggplot(nmds_df, aes(MDS1, MDS2, color = Species)) +
-  geom_point(size = 3) +
-  stat_ellipse() +
-  theme_minimal()
+# NMDS by species
+p_species <- ggplot(
+  nmds_df,
+  aes(
+    x = NMDS1,
+    y = NMDS2,
+    color = Mollusk_species,
+    shape = Ecosystem
+  )
+) +
+  geom_point(size = 3, alpha = 0.9) +
+  stat_ellipse(
+    aes(
+      group = Mollusk_species,
+      fill = Mollusk_species,
+      color = Mollusk_species
+    ),
+    geom = "polygon",
+    alpha = 0.2,
+    show.legend = FALSE
+  ) +
+  scale_color_manual(
+    values = colors,
+    guide = guide_legend(
+      title.theme = element_text(size = 12),
+      label.theme = element_text(face = "italic", size = 11)
+    )
+  ) +
+  scale_fill_manual(values = colors, guide = "none") +
+  scale_shape_manual(
+    values = c(15, 17, 19)
+  ) +
+  theme_minimal() +
+  labs(title = "Mollusk Species") +
+  theme(
+    text = element_text(size = 12)
+  )
+
+# NMDS by type
+p_type <- ggplot(
+  nmds_df,
+  aes(
+    x = NMDS1,
+    y = NMDS2,
+    color = Type,
+    shape = Ecosystem
+  )
+) +
+  geom_point(size = 3, alpha = 0.9) +
+  stat_ellipse(
+    aes(
+      group = Type,
+      fill = Type,
+      color = Type
+    ),
+    geom = "polygon",
+    alpha = 0.2,
+    show.legend = FALSE
+  ) +
+  scale_color_manual(values = colors) +
+  scale_fill_manual(values = colors, guide = "none") +
+  scale_shape_manual(values = c(15, 17, 19)) +
+  theme_minimal() +
+  labs(title = "Mollusk Type") +
+  theme(
+    text = element_text(size = 12)
+  )
+
+# NMDS by ecosystem
+p_ecosystem <- ggplot(
+  nmds_df,
+  aes(
+    x = NMDS1,
+    y = NMDS2,
+    color = Ecosystem,
+    shape = Ecosystem
+  )
+) +
+  geom_point(size = 3, alpha = 0.9) +
+  stat_ellipse(
+    aes(
+      group = Ecosystem,
+      fill = Ecosystem,
+      color = Ecosystem
+    ),
+    geom = "polygon",
+    alpha = 0.2,
+    show.legend = FALSE
+  ) +
+  scale_color_manual(values = ecosystem_colors) +
+  scale_fill_manual(values = ecosystem_colors, guide = "none") +
+  scale_shape_manual(values = c(15, 17, 19)) +
+  theme_minimal() +
+  labs(title = "Ecosystem") +
+  theme(
+    text = element_text(size = 12)
+  )
+
+# Combine plots
+final_plot <- (p_species | (p_type / p_ecosystem)) +
+  plot_layout(widths = c(1.5, 1))
+
+final_plot
 
 ```
 
@@ -334,7 +441,7 @@ This method evaluates whether centroids of groups differ in multivariate space.
 
 ```{r, eval=FALSE}
 
-adonis2(dist_bc ~ Species, data = metadata)
+adonis2(dist_bc ~ Mollusk_species, data = metadata)
 adonis2(dist_bc ~ Type, data = metadata)
 adonis2(dist_bc ~ Ecosystem, data = metadata)
 
@@ -344,14 +451,51 @@ adonis2(dist_bc ~ Ecosystem, data = metadata)
 
 ### Dispersion Analysis
 
-To validate PERMANOVA results, homogeneity of dispersion was assessed using betadisper.
+To validate PERMANOVA results, homogeneity of multivariate dispersion was assessed using the betadisper function.
 
-This step ensures that detected differences are due to shifts in community composition rather than differences in within-group variability.
+This analysis evaluates whether differences detected by PERMANOVA are associated with changes in community composition rather than unequal within-group variability.
 
 ```{r, eval=FALSE}
 
-disp_especie <- betadisper(dist_bc, metadata$Species)
-permutest(disp_especie)
+# Species dispersion
+disp_species <- betadisper(
+  dist_bc,
+  metadata$Mollusk_species
+)
+
+# Type dispersion
+disp_type <- betadisper(
+  dist_bc,
+  metadata$Type
+)
+
+# Ecosystem dispersion
+disp_ecosystem <- betadisper(
+  dist_bc,
+  metadata$Ecosystem
+)
+
+# Permutation tests
+permutest_species <- permutest(
+  disp_species,
+  permutations = 999
+)
+
+permutest_type <- permutest(
+  disp_type,
+  permutations = 999
+)
+
+permutest_ecosystem <- permutest(
+  disp_ecosystem,
+  permutations = 999
+)
+
+# Results
+print(permutest_species)
+print(permutest_type)
+print(permutest_ecosystem)
+
 ```
 
 ![](figures/dispersion_analysis.png)
